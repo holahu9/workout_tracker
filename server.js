@@ -2,7 +2,7 @@ const express = require("express");
 const mongojs = require("mongojs");
 const logger = require("morgan");
 const path = require("path");
-
+const mongoose = require("mongoose");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -12,6 +12,8 @@ app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+
+// static files.
 app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, 'public')));
 
