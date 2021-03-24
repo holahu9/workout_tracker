@@ -14,7 +14,6 @@ This application is a workout tracker that allows a user to view, create and tra
 * [Installation](#installation)
 * [Usage](#usage)
 * [License](#license)
-* [Task](#Task
 * [output](#output)
 * [Questions](#questions)
 
@@ -38,9 +37,6 @@ From Terminal type npm start . Then Open google chrome and type localhost:3000
 
   https://calm-forest-68947.herokuapp.com/
 
-## Task Deligation 
-
-undefined
 
 
   ## Questions 
