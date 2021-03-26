@@ -1,14 +1,14 @@
-// apiRoutes.js - this file offers a set of routes for displaying and saving data to the db
+
 
 // Dependencies
 const db = require("../models");
 
 module.exports = function(app) {
-    // API route to retrieve all their exercises in the db
+    // API route to get all workouts along with their exercises saved in the db
     app.get("/api/workouts", function(req, res) {
-        // find all exercises
+
         db.Workout.find({})
-        .populate("exercises")
+        .populate("exercise")
         .then(dbResults => {
             res.json(dbResults);
         })
@@ -17,11 +17,11 @@ module.exports = function(app) {
         });
      });
 
-     // API route to retrieve 7 workouts 
+     // API route to get the last 7 workouts 
     app.get("/api/workouts/range", function(req, res) {
 
         db.Workout.find({}).sort({$natural: -1}).limit(7)
-        .populate("exercises")
+        .populate("exercise")
         .then(dbResults => {
             res.json(dbResults);
         })
@@ -31,7 +31,7 @@ module.exports = function(app) {
      });
 
     // API route to get all exercises saved in the db
-    app.get("/api/exercises", function(req, res) {
+    app.get("/api/exercise", function(req, res) {
 
        db.Exercise.find({})
         .then(dbResults => {
@@ -42,15 +42,18 @@ module.exports = function(app) {
         });
     });
 
-    // API route to post new exercise to workout.  WorkoutId is passed in as parameter. After exercise created, it's objectId is added to the workout (with workoutId)
+     //API route to post new exercise to workout. 
     app.put("/api/workouts/:id", function(req, res) {
+        console.log(req.body);
+        console.log(db.Exercise);
         const workoutId = req.params.id;
 
         db.Exercise.create(req.body)
-
+        
         .then((results) =>
-            db.Workout.findOneAndUpdate({_id: workoutId}, { $push: { exercises: results._id }}, { new : true }))
-        .then(dbResults => {
+        {console.log(results)
+          return  db.Workout.findOneAndUpdate({_id: workoutId}, { $push: { exercise: results._id }}, { new : true })
+        }).then(dbResults => {
             res.json(dbResults);
         })
         .catch(err => {
